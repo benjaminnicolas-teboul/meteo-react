@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import fetchCityName from './fetchCityName';
-import fetchWeather from './fetchWeather';
+import fetchCityName from '../fetchCityName';
+import fetchWeather from '../fetchWeather';
 
 
 

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import CitySearch from './components/CitySearch';
-import Home from './components/Home';
-import Meteo from './components/Meteo';
+import Home from './components/pages/Home';
+import Meteo from './components/pages/Meteo';
 
 
 function App() {
