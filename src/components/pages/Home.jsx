@@ -35,19 +35,19 @@ const Home = () => {
   return (
     <div className="max-w-md mx-auto py-8 text-center">
       <h1 className="text-3xl font-bold mb-6">
-        {city ? `Météo locale à "${city}"` : 'Météo locale'}
+        {city ? `Meteo locale in ${city}` : 'Meteo locale'}
       </h1>
       {error && <p className="text-red-600">{error}</p>}
       {weather ? (
         <div>
-          <p className="text-xl">Température : {weather.temperature}°C</p>
-          <p className="text-md mt-2">Vent : {weather.windspeed} km/h</p>
+          <p className="text-xl">Temperature : {weather.temperature}°C</p>
+          <p className="text-md mt-2">Wind : {weather.windspeed} km/h</p>
           <p className="text-md mt-2">
             Code météo : {weather.weathercode}
           </p>
         </div>
       ) : (
-        !error && <p>Chargement des données météo...</p>
+        !error && <p>Loading meteo datas...</p>
       )}
     </div>
   );

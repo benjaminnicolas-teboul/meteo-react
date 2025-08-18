@@ -16,7 +16,7 @@ const CitySearch = ({ onSearch }) => {
         type="text"
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        placeholder="Entrez une ville"
+        placeholder="Enter a city"
         className="border border-gray-300 rounded px-3 py-2 flex-grow"
       />
       <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

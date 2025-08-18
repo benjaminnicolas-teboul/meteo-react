@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import CitySearch from '@/components/CitySearch';
-import { Card } from '@/components/ui/card'; // adapte ce chemin selon ta config Shadcn UI
-import WeatherCard from '../WeatherCard';
-import FetchCoords from '../FetchCoords';
+import React, { useState } from "react";
+import CitySearch from "@/components/CitySearch";
+import { Card } from "@/components/ui/card"; // adapte ce chemin selon ta config Shadcn UI
+import WeatherCard from "../WeatherCard";
+import FetchCoords from "../FetchCoords";
 
 const Meteo = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSearch = async (city) => {
+    console.log("Recherche de la ville :", city);
     setLoading(true);
-    setError('');
+    setError("");
     setWeather(null);
 
     try {
@@ -27,27 +28,39 @@ const Meteo = () => {
         code: data.current_weather.weathercode,
       });
     } catch (err) {
-      setError(err.message || 'Erreur API');
+      setError(err.message || "Erreur API");
     }
+    setLoading(false);
+  };
+  const handleReset = () => {
+    setWeather(null);
+    setError("");
     setLoading(false);
   };
 
   return (
     <div className="max-w-md mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">🌦️ Check the weather in the location you want.</h1>
+      {!weather && (
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          🌦️ Check the weather in the location you want.
+        </h1>
+      )}
       <Card className="mb-6 p-6">
-        <CitySearch onSearch={handleSearch} />
+        {!weather && (
+          <Card className="mb-6 p-6">
+            <CitySearch onSearch={handleSearch} />
+          </Card>
+        )}
       </Card>
       {loading && <p className="text-center text-gray-600">Chargement...</p>}
       {error && <p className="text-red-600 mt-4 text-center">{error}</p>}
-    {weather && (
-      <WeatherCard
-        city={weather.city}
-        temperature={weather.temperature}
-        wind={weather.wind}
-        code={weather.code}
-      />
-    )}
+      {weather && (
+        <WeatherCard
+          weather={weather}
+          location={weather.city}
+          onReset={handleReset}
+        />
+      )}
     </div>
   );
 };
