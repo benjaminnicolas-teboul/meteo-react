@@ -14,6 +14,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+   base: "/meteo-react/",
   server: {
     proxy: {
       '/open-meteo': {
