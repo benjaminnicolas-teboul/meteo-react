@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import fetchCityName from '../fetchCityName';
-import fetchWeather from '../fetchWeather';
-
-
-
+import React, { useEffect, useState } from "react";
+import fetchCityName from "../fetchCityName";
+import fetchWeather from "../fetchWeather";
+import WeatherCard from "../WeatherCard";
+import WeatherForecast from "../WeatherForecast";
 
 const Home = () => {
   const [weather, setWeather] = useState(null);
-  const [city, setCity] = useState('');
-  const [error, setError] = useState('');
+  const [city, setCity] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if ('geolocation' in navigator) {
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
           try {
@@ -22,32 +21,39 @@ const Home = () => {
             const c = await fetchCityName(lat, lon);
             setCity(c);
           } catch (err) {
-            setError(err || 'Impossible de charger la météo.');
+            setError(err || "Impossible to load the forecast.");
           }
         },
-        () => setError('Géolocalisation refusée ou indisponible.')
+        () => setError("Geolocalisation denied or unavailable.")
       );
     } else {
-      setError('Géolocalisation non supportée par ce navigateur.');
+      setError("Geolocalisation not supported bye this browser.");
     }
   }, []);
 
   return (
-    <div className="max-w-md mx-auto py-8 text-center">
-      <h1 className="text-3xl font-bold mb-6">
-        {city ? `Meteo locale in ${city}` : 'Meteo locale'}
+    <div className="max-w-4xl mx-auto py-8 text-center">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 break-words whitespace-normal px-4">
+        Local forecast in {city || "inconnue"}
       </h1>
       {error && <p className="text-red-600">{error}</p>}
       {weather ? (
-        <div>
-          <p className="text-xl">Temperature : {weather.temperature}°C</p>
-          <p className="text-md mt-2">Wind : {weather.windspeed} km/h</p>
-          <p className="text-md mt-2">
-            Code météo : {weather.weathercode}
-          </p>
-        </div>
+        <>
+          {weather.daily &&
+          Array.isArray(weather.daily.time) &&
+          weather.daily.time.length > 0 ? (
+            <WeatherForecast daily={weather.daily} />
+          ) : (
+            // Affiche WeatherCard uniquement s'il n'y a pas de données daily valides
+            weather.temperature !== undefined &&
+            weather.wind !== undefined &&
+            weather.code !== undefined && (
+              <WeatherCard weather={weather} location={city} />
+            )
+          )}
+        </>
       ) : (
-        !error && <p>Loading meteo datas...</p>
+        !error && <p className="animate-pulse text-center text-primary">Loading forecast datas...</p>
       )}
     </div>
   );
