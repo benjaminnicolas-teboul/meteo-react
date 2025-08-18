@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <nav className="flex flex-wrap gap-4 p-2 bg-gray-100 mb-4 justify-center w-full">
         
-          <Link to="/">Accueil</Link>
+          <Link to="/">Home</Link>
           <Link to="/meteo">Look for forecast in any location</Link>
         
       </nav>
