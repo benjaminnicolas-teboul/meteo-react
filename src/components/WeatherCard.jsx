@@ -8,6 +8,7 @@ const WeatherCard = ({
   max,
   min,
   code,
+  wind,
   className = ""
 }) => {
   // Fonction pour formater la date en anglais (jour de la semaine + jour + mois)
@@ -43,6 +44,7 @@ const WeatherCard = ({
           <GetWeatherIcon className="w-16 h-16 mx-auto" code={code} />
           <p>Max: {max}°C</p>
           <p>Min: {min}°C</p>
+          <p>Wind: {wind} km/h</p>
         </CardContent>
       </Card>
     );

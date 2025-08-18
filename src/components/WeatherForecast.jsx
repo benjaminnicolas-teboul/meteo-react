@@ -13,6 +13,7 @@ const WeatherForecast = ({ daily }) => {
           max={daily.temperature_2m_max[idx]}
           min={daily.temperature_2m_min[idx]}
           code={daily.weathercode[idx]}
+           wind={daily.windspeed_10m_max ? daily.windspeed_10m_max[idx] : undefined}
         />
       ))}
     </div>
